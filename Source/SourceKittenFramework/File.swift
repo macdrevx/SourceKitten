@@ -104,7 +104,9 @@ public final class File {
             return nil
         }
         let substring: String?
-        if let end = SwiftDocKey.getBodyOffset(dictionary) {
+        if let length = SwiftDocKey.getLength(dictionary) {
+            substring = contents.bridge().substringStartingLinesWithByteRange(start: start, length: Int(length))
+        } else if let end = SwiftDocKey.getBodyOffset(dictionary) {
             substring = contents.bridge().substringStartingLinesWithByteRange(start: start, length: Int(end) - start)
         } else {
             substring = contents.bridge().substringLinesWithByteRange(start: start, length: 0)
